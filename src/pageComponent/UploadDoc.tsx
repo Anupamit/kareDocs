@@ -27,11 +27,11 @@ export default function UploadDoc() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-primary">Document Upload</h1>
+    <div className="container mx-auto p-6 space-y-8">
+      <h1 className="text-3xl font-bold text-primary">Document Upload</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card className="bg-white shadow-lg">
-          <CardHeader className="bg-blue-600 text-white">
+          <CardHeader className="bg-blue-700 text-white">
             <CardTitle>Upload Form</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 mt-4">
@@ -215,7 +215,7 @@ export default function UploadDoc() {
           </CardContent>
         </Card>
         <Card className="bg-white shadow-lg">
-          <CardHeader className="bg-blue-600 text-white">
+          <CardHeader className="bg-blue-700 text-white">
             <CardTitle>Preview</CardTitle>
           </CardHeader>
           <CardContent>

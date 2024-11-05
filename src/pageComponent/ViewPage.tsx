@@ -31,7 +31,7 @@ export default function ViewPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="space-y-6">
           <Card className="bg-white shadow-lg">
-            <CardHeader className="bg-blue-600 text-white">
+            <CardHeader className="bg-blue-700 text-white">
               <CardTitle>Document Details</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 p-6">
@@ -95,7 +95,7 @@ export default function ViewPage() {
             </TabsList>
             <TabsContent value="tag-details">
               <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <CardHeader className="bg-blue-600 text-white">
+                <CardHeader className="bg-blue-700 text-white">
                   <CardTitle>Tag Details</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 p-6">
@@ -256,7 +256,7 @@ export default function ViewPage() {
           </div>
           <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-0">
-              <div className="bg-blue-600 text-white p-4 flex justify-between items-center">
+              <div className="bg-blue-700 text-white p-4 flex justify-between items-center">
                 <span>GenericHa...</span>
                 <div className="flex items-center space-x-4">
                   <span className="text-sm text-blue/80">

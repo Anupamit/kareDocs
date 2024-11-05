@@ -13,17 +13,15 @@ export default function KareAdminDashbord() {
     <div className="flex flex-col min-h-screen bg-background">
       <main className="flex-1 p-4 lg:p-6">
         <div className="max-w-6xl mx-auto space-y-6">
-          <h1 className="text-3xl font-bold">
-            Welcome to KareaAdmin Dashboard
-          </h1>
+          <h1 className="text-3xl font-bold">Welcome to Kare Docs Dashboard</h1>
           <p className="text-muted-foreground">
-            Here's an overview of your system's performance and key metrics.
+            Here's an overview of your Kare Docs dashboard.
           </p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                 <CardTitle className="text-sm font-medium">
-                  Total Users
+                  Total Documents
                 </CardTitle>
                 <Users className="w-4 h-4 text-muted-foreground" />
               </CardHeader>
@@ -37,7 +35,7 @@ export default function KareAdminDashbord() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                 <CardTitle className="text-sm font-medium">
-                  Active Projects
+                  Need Actions
                 </CardTitle>
                 <LayoutDashboard className="w-4 h-4 text-muted-foreground" />
               </CardHeader>
@@ -51,7 +49,7 @@ export default function KareAdminDashbord() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                 <CardTitle className="text-sm font-medium">
-                  System Health
+                  Done Documents
                 </CardTitle>
                 <Settings className="w-4 h-4 text-muted-foreground" />
               </CardHeader>
