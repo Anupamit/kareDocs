@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,18 +35,41 @@ import {
 
 export default function DocSearch() {
   const [currentPage, setCurrentPage] = useState(2);
-  const totalPages = 59;
+  const totalPages: number = 59;
+
+  // Generate array of page numbers to display
+  const getPageNumbers = () => {
+    const delta = 1; // Number of pages to show before and after current page
+    const range = [];
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(totalPages - 1, currentPage + delta);
+      i++
+    ) {
+      range.push(i);
+    }
+
+    if (currentPage - delta > 2) {
+      range.unshift("...");
+    }
+    if (currentPage + delta < totalPages - 1) {
+      range.push("...");
+    }
+
+    range.unshift(1);
+    if (totalPages !== 1 && totalPages !== undefined) {
+      range.push(totalPages);
+    }
+    return range;
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <main className="flex-1 p-4 lg:p-6">
         <div className="max-w-6xl mx-auto space-y-6">
           <h1 className="text-3xl font-bold">Document Search</h1>
-          {/* <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            
-          </div> */}
           <Tabs defaultValue="normal" className="w-full">
-            <TabsList className=" grid w-full grid-cols-2 mb-8">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
               <TabsTrigger value="normal" className="text-lg py-3">
                 <FileText className="mr-2 h-5 w-5" />
                 Normal Search
@@ -173,44 +198,44 @@ export default function DocSearch() {
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <div className="rounded-md border overflow-x-auto">
-                            <Table className="table-auto w-full">
+                          <div className="overflow-x-auto">
+                            <Table className="w-full">
                               <TableHeader>
                                 <TableRow>
-                                  <TableHead className="w-[250px]text-center">
+                                  <TableHead className="text-center">
                                     Serial No
                                   </TableHead>
-                                  <TableHead className="w-[250px]text-center">
+                                  <TableHead className="text-center">
                                     View
                                   </TableHead>
-                                  <TableHead className="w-[250px] text-center">
+                                  <TableHead className="text-center">
                                     EMP Code
                                   </TableHead>
-                                  <TableHead className="w-[250px] text-center">
+                                  <TableHead className="text-center">
                                     EMP Name
                                   </TableHead>
-                                  <TableHead className="w-[250px] text-center">
+                                  <TableHead className="text-center">
                                     Email Address
                                   </TableHead>
-                                  <TableHead className="w-[250px] text-center">
+                                  <TableHead className="text-center">
                                     Phone Number
                                   </TableHead>
-                                  <TableHead className="w-[250px] text-center">
+                                  <TableHead className="text-center">
                                     DOB
                                   </TableHead>
-                                  <TableHead className="w-[250px] text-center">
+                                  <TableHead className="text-center">
                                     Gender
                                   </TableHead>
-                                  <TableHead className="w-[350px] text-center">
+                                  <TableHead className="text-center">
                                     Address
                                   </TableHead>
-                                  <TableHead className="w-[250px] text-center">
+                                  <TableHead className="text-center">
                                     Updated On
                                   </TableHead>
-                                  <TableHead className="w-[250px] text-center">
+                                  <TableHead className="text-center">
                                     Updated By
                                   </TableHead>
-                                  <TableHead className="w-[250px] text-center">
+                                  <TableHead className="text-center">
                                     Document Status
                                   </TableHead>
                                 </TableRow>
@@ -238,7 +263,7 @@ export default function DocSearch() {
                                     <TableCell className="text-center">
                                       +1234567890
                                     </TableCell>
-                                    <TableCell className="w-300px text-center">
+                                    <TableCell className="text-center">
                                       1990-01-01
                                     </TableCell>
                                     <TableCell className="text-center">
@@ -263,7 +288,7 @@ export default function DocSearch() {
                               </TableBody>
                             </Table>
                           </div>
-                          <div className="mt-4 flex items-center justify-between">
+                          <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <div className="flex items-center gap-2">
                               <span className="text-sm text-muted-foreground">
                                 Rows per page:
@@ -279,71 +304,60 @@ export default function DocSearch() {
                                 </SelectContent>
                               </Select>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <Pagination>
-                                <PaginationContent className="flex items-center gap-2">
-                                  <PaginationItem>
-                                    <PaginationPrevious
-                                      onClick={() =>
-                                        setCurrentPage((prev) =>
-                                          Math.max(prev - 1, 1)
-                                        )
-                                      }
-                                      // disabled={currentPage === 1}
-                                    />
+                            <Pagination>
+                              <PaginationContent>
+                                <PaginationItem>
+                                  <PaginationPrevious
+                                    href="#"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      setCurrentPage((prev) =>
+                                        Math.max(prev - 1, 1)
+                                      );
+                                    }}
+                                    className={
+                                      currentPage === 1
+                                        ? "pointer-events-none opacity-50"
+                                        : ""
+                                    }
+                                  />
+                                </PaginationItem>
+                                {getPageNumbers().map((pageNum, i) => (
+                                  <PaginationItem key={i}>
+                                    {pageNum === "..." ? (
+                                      <PaginationEllipsis />
+                                    ) : (
+                                      <PaginationLink
+                                        href="#"
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          setCurrentPage(Number(pageNum));
+                                        }}
+                                        isActive={currentPage === pageNum}
+                                      >
+                                        {pageNum}
+                                      </PaginationLink>
+                                    )}
                                   </PaginationItem>
-                                  <PaginationItem>
-                                    <PaginationLink
-                                      href="#"
-                                      onClick={(e) => e.preventDefault()}
-                                    >
-                                      Page {currentPage} of {totalPages}
-                                    </PaginationLink>
-                                  </PaginationItem>
-                                  <PaginationItem>
-                                    <PaginationEllipsis />
-                                  </PaginationItem>
-                                  <PaginationItem>
-                                    <PaginationNext
-                                      onClick={() =>
-                                        setCurrentPage((prev) =>
-                                          Math.min(prev + 1, totalPages)
-                                        )
-                                      }
-                                      // disabled={currentPage === totalPages}
-                                    />
-                                  </PaginationItem>
-                                </PaginationContent>
-                              </Pagination>
-
-                              {/* <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() =>
-                                  setCurrentPage((prev) =>
-                                    Math.max(prev - 1, 1)
-                                  )
-                                }
-                                disabled={currentPage === 1}
-                              >
-                                Previous
-                              </Button>
-                              <span className="text-sm text-muted-foreground">
-                                Page {currentPage} of {totalPages}
-                              </span>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() =>
-                                  setCurrentPage((prev) =>
-                                    Math.min(prev + 1, totalPages)
-                                  )
-                                }
-                                disabled={currentPage === totalPages}
-                              >
-                                Next
-                              </Button> */}
-                            </div>
+                                ))}
+                                <PaginationItem>
+                                  <PaginationNext
+                                    href="#"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      setCurrentPage((prev) =>
+                                        Math.min(prev + 1, totalPages)
+                                      );
+                                    }}
+                                    className={
+                                      currentPage === totalPages
+                                        ? "pointer-events-none opacity-50"
+                                        : ""
+                                    }
+                                  />
+                                </PaginationItem>
+                              </PaginationContent>
+                            </Pagination>
                           </div>
                         </CardContent>
                       </Card>
@@ -416,7 +430,7 @@ export default function DocSearch() {
                       <CardTitle className="text-xl">Search Criteria</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-2">
                         <Button>
                           <span className="mr-2">+</span> Add Clause
                         </Button>
@@ -424,7 +438,7 @@ export default function DocSearch() {
                           <span className="mr-2">-</span> Remove Clause
                         </Button>
                       </div>
-                      <div className="flex items-end gap-2">
+                      <div className="flex flex-col sm:flex-row items-end gap-2">
                         <div className="flex-grow">
                           <Label htmlFor="query-name">Query Name</Label>
                           <Input
@@ -446,7 +460,7 @@ export default function DocSearch() {
                     </CardContent>
                   </Card>
 
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <Button variant="outline">New / Clear</Button>
                     <Button>
                       <Search className="mr-2 h-4 w-4" />
@@ -462,15 +476,13 @@ export default function DocSearch() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="rounded-md border">
+                      <div className="overflow-x-auto">
                         <Table>
                           <TableHeader>
                             <TableRow>
-                              <TableHead className="w-[50px]">
-                                Serial No
-                              </TableHead>
+                              <TableHead>Serial No</TableHead>
                               <TableHead>TotalRows</TableHead>
-                              <TableHead className="w-[50px]">View</TableHead>
+                              <TableHead>View</TableHead>
                               <TableHead>MainTagId</TableHead>
                               <TableHead>SubTagId</TableHead>
                               <TableHead>Tag Status</TableHead>
@@ -527,7 +539,7 @@ export default function DocSearch() {
                         </Table>
                       </div>
                       {/* Pagination for advanced search results */}
-                      <div className="mt-4 flex items-center justify-between">
+                      <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div className="flex items-center gap-2">
                           <span className="text-sm text-muted-foreground">
                             Rows per page:
@@ -543,33 +555,60 @@ export default function DocSearch() {
                             </SelectContent>
                           </Select>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() =>
-                              setCurrentPage((prev) => Math.max(prev - 1, 1))
-                            }
-                            disabled={currentPage === 1}
-                          >
-                            Previous
-                          </Button>
-                          <span className="text-sm text-muted-foreground">
-                            Page {currentPage} of {totalPages}
-                          </span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() =>
-                              setCurrentPage((prev) =>
-                                Math.min(prev + 1, totalPages)
-                              )
-                            }
-                            disabled={currentPage === totalPages}
-                          >
-                            Next
-                          </Button>
-                        </div>
+                        <Pagination>
+                          <PaginationContent>
+                            <PaginationItem>
+                              <PaginationPrevious
+                                href="#"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setCurrentPage((prev) =>
+                                    Math.max(prev - 1, 1)
+                                  );
+                                }}
+                                className={
+                                  currentPage === 1
+                                    ? "pointer-events-none opacity-50"
+                                    : ""
+                                }
+                              />
+                            </PaginationItem>
+                            {getPageNumbers().map((pageNum, i) => (
+                              <PaginationItem key={i}>
+                                {pageNum === "..." ? (
+                                  <PaginationEllipsis />
+                                ) : (
+                                  <PaginationLink
+                                    href="#"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      setCurrentPage(Number(pageNum));
+                                    }}
+                                    isActive={currentPage === pageNum}
+                                  >
+                                    {pageNum}
+                                  </PaginationLink>
+                                )}
+                              </PaginationItem>
+                            ))}
+                            <PaginationItem>
+                              <PaginationNext
+                                href="#"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setCurrentPage((prev) =>
+                                    Math.min(prev + 1, totalPages)
+                                  );
+                                }}
+                                className={
+                                  currentPage === totalPages
+                                    ? "pointer-events-none opacity-50"
+                                    : ""
+                                }
+                              />
+                            </PaginationItem>
+                          </PaginationContent>
+                        </Pagination>
                       </div>
                     </CardContent>
                   </Card>
