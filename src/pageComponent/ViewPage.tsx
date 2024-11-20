@@ -458,74 +458,84 @@ export default function ViewPage() {
         </div>
 
         <div className="space-y-6">
-          <div className="flex justify-between">
-            <Button variant="outline" className="w-[48%]">
-              <Download className="mr-2 h-4 w-4" />
-              Complete Download
-            </Button>
-            <Button variant="outline" className="w-[48%]">
-              <Download className="mr-2 h-4 w-4" />
-              Category wise Download
-            </Button>
-          </div>
           <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-0">
-              <div className="bg-blue-700 text-white p-4 flex justify-between items-center">
-                <span>GenericHa...</span>
-                <div className="flex items-center space-x-4">
-                  <span className="text-sm text-blue-100">
-                    Page {currentPage} of {totalPages}
-                  </span>
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.max(1, prev - 1))
-                      }
-                      disabled={currentPage === 1}
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                      <span className="sr-only">Previous page</span>
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.min(totalPages, prev + 1))
-                      }
-                      disabled={currentPage === totalPages}
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                      <span className="sr-only">Next page</span>
+              <div className="bg-blue-700 text-white p-4 flex flex-col space-y-4">
+                <div className="flex justify-between items-center">
+                  <span>GenericHa...</span>
+                  <div className="flex items-center space-x-4">
+                    <span className="text-sm text-blue-100">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() =>
+                          setCurrentPage((prev) => Math.max(1, prev - 1))
+                        }
+                        disabled={currentPage === 1}
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                        <span className="sr-only">Previous page</span>
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() =>
+                          setCurrentPage((prev) =>
+                            Math.min(totalPages, prev + 1)
+                          )
+                        }
+                        disabled={currentPage === totalPages}
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                        <span className="sr-only">Next page</span>
+                      </Button>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setZoom(Math.max(20, zoom - 10))}
+                      >
+                        <ZoomOut className="h-4 w-4" />
+                        <span className="sr-only">Zoom out</span>
+                      </Button>
+                      <span className="text-sm text-blue-100">{zoom}%</span>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setZoom(Math.min(200, zoom + 10))}
+                      >
+                        <ZoomIn className="h-4 w-4" />
+                        <span className="sr-only">Zoom in</span>
+                      </Button>
+                    </div>
+                    <Button variant="ghost" size="icon">
+                      <Printer className="h-4 w-4" />
+                      <span className="sr-only">Print</span>
                     </Button>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setZoom(Math.max(20, zoom - 10))}
-                    >
-                      <ZoomOut className="h-4 w-4" />
-                      <span className="sr-only">Zoom out</span>
-                    </Button>
-                    <span className="text-sm text-blue-100">{zoom}%</span>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setZoom(Math.min(200, zoom + 10))}
-                    >
-                      <ZoomIn className="h-4 w-4" />
-                      <span className="sr-only">Zoom in</span>
-                    </Button>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <Printer className="h-4 w-4" />
-                    <span className="sr-only">Print</span>
+                </div>
+                <div className="flex justify-between space-x-4">
+                  <Button
+                    variant="outline"
+                    className="w-full bg-white text-blue-700 hover:bg-blue-100"
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Complete Download
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full bg-white text-blue-700 hover:bg-blue-100"
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Category wise Download
                   </Button>
                 </div>
               </div>
-              <div className="aspect-[4/3] relative">
+              <div className="aspect-[6/8.7] relative">
                 <img
                   src="/placeholder.svg?height=800&width=600"
                   alt="PDF preview"
