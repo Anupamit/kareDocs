@@ -2,10 +2,8 @@ import { cn } from "@/lib/utils";
 
 const HeaderPage = () => {
   return (
-    <header className={cn("p-4 bg-blue-700 shadow-md")}>
-      <div
-        className={cn("container mx-auto flex justify-between items-center")}
-      >
+    <header className={cn("p-4 bg-blue-700 shadow-md w-full")}>
+      <div className={cn("flex justify-between items-center")}>
         <div className={cn("flex-grow")}></div>
         <div className={cn("flex items-center space-x-2")}>
           <img

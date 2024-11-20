@@ -67,7 +67,7 @@ export default function DocSearch() {
     <div className="flex flex-col min-h-screen bg-background">
       <main className="flex-1 p-4 lg:p-6">
         <div className="max-w-6xl mx-auto space-y-6">
-          <h1 className="text-3xl font-bold">Document Search</h1>
+          <h1 className="text-2xl font-bold">Document Search</h1>
           <Tabs defaultValue="normal" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-8">
               <TabsTrigger value="normal" className="text-lg py-3">

@@ -13,7 +13,7 @@ export default function KareAdminDashbord() {
     <div className="flex flex-col min-h-screen bg-background">
       <main className="flex-1 p-4 lg:p-6">
         <div className="max-w-6xl mx-auto space-y-6">
-          <h1 className="text-3xl font-bold">Welcome to Kare Docs Dashboard</h1>
+          <h1 className="text-2xl font-bold">Welcome to Kare Docs Dashboard</h1>
           <p className="text-muted-foreground">
             Here's an overview of your Kare Docs dashboard.
           </p>

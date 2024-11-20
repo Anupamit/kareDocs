@@ -40,7 +40,7 @@ export default function ViewPage() {
 
   return (
     <div className="container mx-auto p-6 space-y-8">
-      <h1 className="text-3xl font-bold text-primary">Document Download</h1>
+      <h1 className="text-2xl font-bold text-primary">Document Download</h1>
 
       {/* Mobile Layout */}
       <div className="lg:hidden flex h-[calc(100vh-100px)]">

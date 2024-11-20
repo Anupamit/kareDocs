@@ -5,7 +5,6 @@ import {
   AudioWaveform,
   BadgeCheck,
   Bell,
-  Bot,
   ChevronRight,
   ChevronsUpDown,
   Command,
@@ -59,6 +58,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import HeaderPage from "./HeaderPage";
+
 const data = {
   user: {
     name: "Anupam Kumar",
@@ -69,7 +69,7 @@ const data = {
     {
       name: "Kare Docs",
       logo: GalleryVerticalEnd,
-      plan: "Document Mangement",
+      plan: "Document Management",
     },
     {
       name: "Kare Admin",
@@ -106,35 +106,19 @@ const data = {
         },
       ],
     },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
   ],
 };
 
 export default function SidebarPage() {
   const navigate = useNavigate();
   const [activeTeam, setActiveTeam] = React.useState(data.teams[0]);
+  const [activeNav, setActiveNav] = React.useState(data.navMain[0]); // Corrected this line
+
   const signOut = () => {
     localStorage.clear();
     navigate("/login");
   };
+
   return (
     <>
       <HeaderPage />
@@ -149,7 +133,7 @@ export default function SidebarPage() {
                       size="lg"
                       className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                     >
-                      <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                      <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary  text-sidebar-primary-foreground">
                         <activeTeam.logo className="size-4" />
                       </div>
                       <div className="grid flex-1 text-left text-sm leading-tight">
@@ -193,9 +177,48 @@ export default function SidebarPage() {
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarHeader>
+
           <SidebarContent>
             <SidebarGroup>
               <SidebarGroupLabel>Document Management</SidebarGroupLabel>
+
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <SidebarMenuButton
+                        size="lg"
+                        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                      >
+                        <div className="grid flex-1 text-left text-sm leading-tight">
+                          <span className="truncate font-semibold">
+                            {activeNav.title}
+                          </span>
+                        </div>
+                        <ChevronsUpDown className="ml-auto" />
+                      </SidebarMenuButton>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                      align="start"
+                      side="bottom"
+                      sideOffset={4}
+                    >
+                      {data.navMain.map((item) => (
+                        <DropdownMenuItem
+                          key={item.title}
+                          onClick={() => setActiveNav(item)}
+                          className="gap-2 p-2"
+                        >
+                          {item.title}
+                        </DropdownMenuItem>
+                      ))}
+                      <DropdownMenuSeparator />
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </SidebarMenuItem>
+              </SidebarMenu>
+
               <SidebarMenu>
                 {data.navMain.map((item) => (
                   <Collapsible
@@ -239,44 +262,6 @@ export default function SidebarPage() {
             </SidebarGroup>
           </SidebarContent>
 
-          {/* <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupLabel>Document Mangement</SidebarGroupLabel>
-              <SidebarMenu>
-                {data.navMain.map((item) => (
-                  <Collapsible
-                    key={item.title}
-                    asChild
-                    defaultOpen={item.isActive}
-                    className="group/collapsible"
-                  >
-                    <SidebarMenuItem>
-                      <CollapsibleTrigger asChild>
-                        <SidebarMenuButton tooltip={item.title}>
-                          {item.icon && <item.icon />}
-                          <span>{item.title}</span>
-                          <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                        </SidebarMenuButton>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <SidebarMenuSub>
-                          {item.items?.map((subItem) => (
-                            <SidebarMenuSubItem key={subItem.title}>
-                              <SidebarMenuSubButton asChild>
-                                <Link to={subItem.url}>
-                                  <span>{subItem.title}</span>
-                                </Link>
-                              </SidebarMenuSubButton>
-                            </SidebarMenuSubItem>
-                          ))}
-                        </SidebarMenuSub>
-                      </CollapsibleContent>
-                    </SidebarMenuItem>
-                  </Collapsible>
-                ))}
-              </SidebarMenu>
-            </SidebarGroup>
-          </SidebarContent> */}
           <SidebarFooter>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -334,8 +319,6 @@ export default function SidebarPage() {
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-
-                    <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                       <DropdownMenuItem>
                         <BadgeCheck />
@@ -378,11 +361,6 @@ export default function SidebarPage() {
             </div>
           </header>
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div> */}
             <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
               <Outlet />
             </div>
