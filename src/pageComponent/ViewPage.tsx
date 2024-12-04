@@ -14,12 +14,12 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import {
   ChevronLeft,
   ChevronRight,
@@ -37,45 +37,78 @@ export default function ViewPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 4;
   const [zoom, setZoom] = useState(80);
+  const [openSheet, setOpenSheet] = useState<string | null>(null);
 
   return (
-    <div className="container mx-auto p-6 space-y-8">
+    <div className="container mx-auto p-2 space-y-2">
       <h1 className="text-2xl font-bold text-primary">Document Download</h1>
 
       {/* Mobile Layout */}
       <div className="lg:hidden flex h-[calc(100vh-100px)]">
         {/* Left Sidebar with Vertical Tabs */}
         <div className="w-16 border-r bg-background flex flex-col gap-1">
-          <Dialog>
-            <DialogTrigger asChild>
+          <Sheet
+            open={openSheet === "document"}
+            onOpenChange={(open) => setOpenSheet(open ? "document" : null)}
+          >
+            <SheetTrigger asChild>
               <Button
                 variant="ghost"
                 className="h-32 w-full rounded-none hover:bg-muted relative group"
               >
                 <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-                  <Upload className="w-4 h-4" />
+                  <FileText className="w-4 h-4" />
                   <span className="vertical-text origin-center -rotate-180 text-sm">
-                    Upload File
+                    Document Details
                   </span>
                 </div>
               </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Upload Files</DialogTitle>
-              </DialogHeader>
-              <div className="grid gap-4">
-                <div className="border-2 border-dashed rounded-lg p-8 text-center">
-                  <p className="text-muted-foreground">
-                    Drag and drop files here or click to browse
-                  </p>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetHeader>
+                <SheetTitle>Document Details</SheetTitle>
+              </SheetHeader>
+              <div className="grid gap-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="project-type-mobile">Project Type</Label>
+                  <Input
+                    id="project-type-mobile"
+                    value="Demo_HR"
+                    readOnly
+                    className="bg-secondary/10"
+                  />
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="department-mobile">Department</Label>
+                  <Input
+                    id="department-mobile"
+                    value="Demo HR"
+                    readOnly
+                    className="bg-secondary/10"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="ref-id-mobile">Ref ID</Label>
+                  <Input
+                    id="ref-id-mobile"
+                    value="II_II_16222_261_1031"
+                    readOnly
+                    className="bg-secondary/10"
+                  />
+                </div>
+                <Button variant="outline" className="w-full">
+                  <Search className="mr-2 h-4 w-4" />
+                  Search Again
+                </Button>
               </div>
-            </DialogContent>
-          </Dialog>
+            </SheetContent>
+          </Sheet>
 
-          <Dialog>
-            <DialogTrigger asChild>
+          <Sheet
+            open={openSheet === "tag"}
+            onOpenChange={(open) => setOpenSheet(open ? "tag" : null)}
+          >
+            <SheetTrigger asChild>
               <Button
                 variant="ghost"
                 className="h-32 w-full rounded-none hover:bg-muted relative group"
@@ -87,19 +120,14 @@ export default function ViewPage() {
                   </span>
                 </div>
               </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Tag Details</DialogTitle>
-              </DialogHeader>
-              <div className="grid gap-4">
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetHeader>
+                <SheetTitle>Tag Details</SheetTitle>
+              </SheetHeader>
+              <div className="grid gap-4 py-4">
                 <div className="space-y-2">
-                  <Label
-                    htmlFor="category-mobile"
-                    className="text-sm font-medium text-primary"
-                  >
-                    Category
-                  </Label>
+                  <Label htmlFor="category-mobile">Category</Label>
                   <Select defaultValue="onboardingkit">
                     <SelectTrigger id="category-mobile">
                       <SelectValue placeholder="Select category" />
@@ -112,12 +140,7 @@ export default function ViewPage() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label
-                    htmlFor="subcategory-mobile"
-                    className="text-sm font-medium text-primary"
-                  >
-                    Subcategory
-                  </Label>
+                  <Label htmlFor="subcategory-mobile">Subcategory</Label>
                   <Select defaultValue="employeejoiningdocket">
                     <SelectTrigger id="subcategory-mobile">
                       <SelectValue placeholder="Select subcategory" />
@@ -129,74 +152,55 @@ export default function ViewPage() {
                     </SelectContent>
                   </Select>
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="update-id-mobile">Update ID</Label>
+                  <Select defaultValue="1689">
+                    <SelectTrigger id="update-id-mobile">
+                      <SelectValue placeholder="Select update ID" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1689">1689</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex justify-between pt-4">
+                  <Button>Add File</Button>
+                  <Button variant="outline">Refresh</Button>
+                </div>
               </div>
-            </DialogContent>
-          </Dialog>
+            </SheetContent>
+          </Sheet>
 
-          <Dialog>
-            <DialogTrigger asChild>
+          <Sheet
+            open={openSheet === "upload"}
+            onOpenChange={(open) => setOpenSheet(open ? "upload" : null)}
+          >
+            <SheetTrigger asChild>
               <Button
                 variant="ghost"
                 className="h-32 w-full rounded-none hover:bg-muted relative group"
               >
                 <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-                  <FileText className="w-4 h-4" />
+                  <Upload className="w-4 h-4" />
                   <span className="vertical-text origin-center -rotate-180 text-sm">
-                    Document Details
+                    Upload File
                   </span>
                 </div>
               </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Document Details</DialogTitle>
-              </DialogHeader>
-              <div className="grid gap-4">
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="project-type-mobile"
-                    className="text-sm font-medium text-primary"
-                  >
-                    Project Type
-                  </Label>
-                  <Input
-                    id="project-type-mobile"
-                    value="Demo_HR"
-                    readOnly
-                    className="bg-secondary/10"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="department-mobile"
-                    className="text-sm font-medium text-primary"
-                  >
-                    Department
-                  </Label>
-                  <Input
-                    id="department-mobile"
-                    value="Demo HR"
-                    readOnly
-                    className="bg-secondary/10"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="ref-id-mobile"
-                    className="text-sm font-medium text-primary"
-                  >
-                    Ref ID
-                  </Label>
-                  <Input
-                    id="ref-id-mobile"
-                    value="II_II_16222_261_1031"
-                    readOnly
-                    className="bg-secondary/10"
-                  />
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetHeader>
+                <SheetTitle>Upload Files</SheetTitle>
+              </SheetHeader>
+              <div className="grid gap-4 py-4">
+                <div className="border-2 border-dashed rounded-lg p-8 text-center">
+                  <p className="text-muted-foreground">
+                    Drag and drop files here or click to browse
+                  </p>
                 </div>
               </div>
-            </DialogContent>
-          </Dialog>
+            </SheetContent>
+          </Sheet>
         </div>
 
         {/* Main Content Area for Mobile */}
@@ -213,30 +217,50 @@ export default function ViewPage() {
           </div>
 
           {/* Page Navigation for Mobile */}
-          <div className="flex items-center justify-between p-2 border-t bg-background">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage <= 1}
-            >
-              <ChevronLeft className="w-4 h-4" />
-              <span className="sr-only">Previous page</span>
-            </Button>
-            <span className="text-sm text-muted-foreground">
-              Page {currentPage} of {totalPages}
-            </span>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() =>
-                setCurrentPage(Math.min(totalPages, currentPage + 1))
-              }
-              disabled={currentPage >= totalPages}
-            >
-              <ChevronRight className="w-4 h-4" />
-              <span className="sr-only">Next page</span>
-            </Button>
+          <div className="flex flex-col p-2 border-t bg-background w-full">
+            <div className="flex justify-between space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1 text-xs px-2 py-1"
+              >
+                <Download className="mr-1 h-3 w-3" />
+                Complete
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1 text-xs px-2 py-1"
+              >
+                <Download className="mr-1 h-3 w-3" />
+                Category
+              </Button>
+            </div>
+            <div className="flex items-center justify-between mt-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                disabled={currentPage <= 1}
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span className="sr-only">Previous page</span>
+              </Button>
+              <span className="text-sm text-muted-foreground">
+                Page {currentPage} of {totalPages}
+              </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() =>
+                  setCurrentPage(Math.min(totalPages, currentPage + 1))
+                }
+                disabled={currentPage >= totalPages}
+              >
+                <ChevronRight className="w-4 h-4" />
+                <span className="sr-only">Next page</span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -461,6 +485,22 @@ export default function ViewPage() {
           <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-0">
               <div className="bg-blue-700 text-white p-4 flex flex-col space-y-4">
+                <div className="flex justify-between space-x-4">
+                  <Button
+                    variant="outline"
+                    className="w-full bg-white text-blue-700 hover:bg-blue-100"
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Complete Download
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full bg-white text-blue-700 hover:bg-blue-100"
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Category Download
+                  </Button>
+                </div>
                 <div className="flex justify-between items-center">
                   <span>GenericHa...</span>
                   <div className="flex items-center space-x-4">
@@ -517,22 +557,6 @@ export default function ViewPage() {
                       <span className="sr-only">Print</span>
                     </Button>
                   </div>
-                </div>
-                <div className="flex justify-between space-x-4">
-                  <Button
-                    variant="outline"
-                    className="w-full bg-white text-blue-700 hover:bg-blue-100"
-                  >
-                    <Download className="mr-2 h-4 w-4" />
-                    Complete Download
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full bg-white text-blue-700 hover:bg-blue-100"
-                  >
-                    <Download className="mr-2 h-4 w-4" />
-                    Category wise Download
-                  </Button>
                 </div>
               </div>
               <div className="aspect-[6/8.7] relative">
