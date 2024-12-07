@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+// import FooterPage from "./FooterPage";
 
 export default function KareAdminDashbord() {
   return (
@@ -115,13 +116,9 @@ export default function KareAdminDashbord() {
           </div>
         </div>
       </main>
-      <footer className="py-6 px-4 lg:px-6">
-        <div className="container mx-auto flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
-          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © 2023 KareaAdmin. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      {/* <footer className="py-2 px-2 lg:px-4">
+        <FooterPage />
+      </footer> */}
     </div>
   );
 }
