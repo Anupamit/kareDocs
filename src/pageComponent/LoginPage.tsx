@@ -106,7 +106,7 @@ export default function LoginPage({
               </div>
               <div className="flex justify-start">
                 <Link
-                  to="#"
+                  to="/forgot-password"
                   style={{ color: "#0a1b44" }}
                   className="text-sm  hover:underline"
                 >
