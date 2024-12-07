@@ -15,6 +15,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import SidebarPage from "./pageComponent/SidebarPage";
 import HeaderPage from "./pageComponent/HeaderPage";
 import FooterPage from "./pageComponent/FooterPage";
+import ForgotPassword from "./pageComponent/ForgotPassword";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -29,6 +30,7 @@ function App() {
             path="/login"
             element={<LoginPage setIsAuthenticated={setIsAuthenticated} />}
           />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="/"
             // element={isAuthenticated ? <SideMenu /> : <Navigate to="/login" />}
