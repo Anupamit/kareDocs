@@ -23,6 +23,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useState } from "react";
+import FooterPage from "./FooterPage";
 
 export const description =
   "A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action.";
@@ -206,6 +207,9 @@ export default function Sidemenu() {
             <Outlet />
           </div>
         </main>
+        <footer className="py-6 px-4 lg:px-6">
+          <FooterPage />
+        </footer>
       </div>
     </div>
   );
